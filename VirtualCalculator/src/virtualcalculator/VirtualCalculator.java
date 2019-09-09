@@ -106,19 +106,19 @@ public class VirtualCalculator implements ActionListener
                 break;
             }
             case "+": {
-                this.op = e.getActionCommand();
+                this.op = actionCommand;
                 break;
             }
             case "-": {
-                this.op = e.getActionCommand();
+                this.op = actionCommand;
                 break;
             }
             case "x": {
-                this.op = e.getActionCommand();
+                this.op = actionCommand;
                 break;
             }
             case "/": {
-                this.op = e.getActionCommand();
+                this.op = actionCommand;
                 break;
             }
             case "=": {
@@ -129,13 +129,14 @@ public class VirtualCalculator implements ActionListener
             }
             default: {
                 if (this.op.isEmpty()) {
-                    this.a += e.getActionCommand();
+                    this.a += actionCommand;
                     break;
                 }
-                this.b += e.getActionCommand();
+                this.b += actionCommand;
                 break;
             }
         }
+        jscreen.setText(a+op+b);
     }
     
     public static void main(final String[] args) {
