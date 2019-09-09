@@ -71,7 +71,7 @@ public class VirtualCalculator implements ActionListener
     String b;
     String op, op1;
     double c;
-    JLabel jscreen;
+    JLabel jscreen, jscreen2;
     JKeyboard jkeyboard;
     
     private VirtualCalculator() {
@@ -79,10 +79,18 @@ public class VirtualCalculator implements ActionListener
         this.a = "";
         this.b = "";
         this.op = "";
+        this.op1= "";
         this.c = 0.0;
         final JFrame frCase = new JFrame("Virtual Calculator");
-        (this.jscreen = new JLabel("", 4)).setText("Pulse los Botones");        
+        (this.jscreen = new JLabel("", 4)).setText("Pulse los Botones");
+        (this.jscreen2 = new JLabel("", 4)).setText("");        
         (this.jkeyboard = new JKeyboard()).AddActionListeners((ActionListener)this);
+        jscreen.setOpaque(true);
+        jscreen2.setOpaque(true);
+        //jscreen2.setAlignmentY(Component.TOP_ALIGNMENT);
+        jscreen.setBackground(Color.WHITE);
+        jscreen2.setBackground(Color.WHITE);
+        frCase.add(this.jscreen2,"Center" );
         frCase.add(this.jscreen, "North");
         frCase.add(this.jkeyboard.pnlmain, "South");
         frCase.setSize(250, 300);
@@ -95,6 +103,7 @@ public class VirtualCalculator implements ActionListener
    @Override
     public void actionPerformed(final ActionEvent e) {
         final String actionCommand = e.getActionCommand();
+       // String actC = d.getActionCommand();
         switch (actionCommand) {
             case "<=": {
                 if (this.b.length() != 0) {
@@ -109,14 +118,18 @@ public class VirtualCalculator implements ActionListener
                     this.a = this.a.substring(0, this.a.length() - 1);
                     break;
                 }
+                if (this.op1.length() != 0) {
+                    this.op1 = this.op.substring(0, this.op1.length() - 1);
+                    break;
+                }
                 break;
             }
             case "+": {
                 this.op = e.getActionCommand();
                 break;
             }
-            case "-": {
-                op1= e.getActionCommand();
+            case "-": { 
+                //op1= "-";
                 this.op = e.getActionCommand();
                 break;
             }
@@ -129,9 +142,10 @@ public class VirtualCalculator implements ActionListener
                 break;
             }
             case "=": {
-                this.a = Float.toString((float)this.Cal.Calcular((double)Float.parseFloat(this.a), this.op, (double)Float.parseFloat(this.b)));
+                this.a = Float.toString((float)this.Cal.Calcular(op1,(double)Float.parseFloat(this.a), this.op, (double)Float.parseFloat(this.b)));
                 this.b = "";
                 this.op = "";
+                op1="";
                 break;
             }
             default: {
@@ -142,8 +156,10 @@ public class VirtualCalculator implements ActionListener
                 this.b += e.getActionCommand();
                 break;
             }
-        }   
-     jscreen.setText(a+op+b);   
+        }
+                
+      jscreen.setText(op1+a+op+b);
+     jscreen2.setText(Float.toString((float)this.Cal.Calcular(op1,(double)Float.parseFloat(this.a), this.op, (double)Float.parseFloat(this.b))));
     }
     
     public static void main(final String[] args) {
@@ -154,7 +170,7 @@ public class VirtualCalculator implements ActionListener
             final Calculadora Cal1 = new Calculadora();
             System.out.println("Hola Soy la Calculadora de Mateo");
             try {
-                System.out.println("El resultado es: " + Cal1.Calcular((double)Float.parseFloat(args[0]), args[1], (double)Float.parseFloat(args[2])));
+                System.out.println("El resultado es: " + Cal1.Calcular(args[0],(double)Float.parseFloat(args[1]), args[2], (double)Float.parseFloat(args[3])));
             }
             catch (NumberFormatException e) {
                 System.out.println("Numero de Argumentos o valores Invalidos. Ej. 2 + 3 ");
