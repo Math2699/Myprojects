@@ -32,14 +32,20 @@ class JKeyboard
         final char[] operators = { '+', '-', 'x', '/' };
         for (int i = 0; i < digits.length; ++i) {
             (this.jbtndigits[i] = new JButton("" + digits[i])).setMargin(new Insets(1, 1, 1, 1));
+            jbtndigits[i].setBackground(Color.darkGray);
+            jbtndigits[i].setForeground(Color.white);
             this.pnldigits.add(this.jbtndigits[i]);
         }
         this.pnldigits.add(this.jbtnequal = new JButton("="));
         for (int i = 0; i < operators.length; ++i) {
             (this.jbtnoperators[i] = new JButton("" + operators[i])).setMargin(new Insets(2, 2, 2, 2));
+            jbtnoperators[i].setBackground(Color.orange);
             this.pnloperators.add(this.jbtnoperators[i]);
         }
+        jbtnequal.setBackground(Color.red);
+        jbtnequal.setForeground(Color.white);
         this.pnloperators.add(this.jbtndel = new JButton("<="));
+        jbtndel.setBackground(Color.orange);
         this.pnlmain.add(this.pnldigits, "West");
         this.pnlmain.add(this.pnloperators, "East");
     }
@@ -63,7 +69,7 @@ public class VirtualCalculator implements ActionListener
     Calculadora Cal;
     String a;
     String b;
-    String op;
+    String op, op1;
     double c;
     JLabel jscreen;
     JKeyboard jkeyboard;
@@ -75,7 +81,7 @@ public class VirtualCalculator implements ActionListener
         this.op = "";
         this.c = 0.0;
         final JFrame frCase = new JFrame("Virtual Calculator");
-        (this.jscreen = new JLabel("", 4)).setText("Pulse los Botones");
+        (this.jscreen = new JLabel("", 4)).setText("Pulse los Botones");        
         (this.jkeyboard = new JKeyboard()).AddActionListeners((ActionListener)this);
         frCase.add(this.jscreen, "North");
         frCase.add(this.jkeyboard.pnlmain, "South");
@@ -110,6 +116,7 @@ public class VirtualCalculator implements ActionListener
                 break;
             }
             case "-": {
+                op1= e.getActionCommand();
                 this.op = e.getActionCommand();
                 break;
             }
@@ -135,7 +142,8 @@ public class VirtualCalculator implements ActionListener
                 this.b += e.getActionCommand();
                 break;
             }
-        }
+        }   
+     jscreen.setText(a+op+b);   
     }
     
     public static void main(final String[] args) {
