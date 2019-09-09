@@ -32,14 +32,20 @@ class JKeyboard
         final char[] operators = { '+', '-', 'x', '/' };
         for (int i = 0; i < digits.length; ++i) {
             (this.jbtndigits[i] = new JButton("" + digits[i])).setMargin(new Insets(1, 1, 1, 1));
+            jbtndigits[i].setBackground(Color.darkGray);
+            jbtndigits[i].setForeground(Color.white);
             this.pnldigits.add(this.jbtndigits[i]);
         }
         this.pnldigits.add(this.jbtnequal = new JButton("="));
         for (int i = 0; i < operators.length; ++i) {
             (this.jbtnoperators[i] = new JButton("" + operators[i])).setMargin(new Insets(2, 2, 2, 2));
+            jbtnoperators[i].setBackground(Color.orange);
             this.pnloperators.add(this.jbtnoperators[i]);
         }
+        jbtnequal.setBackground(Color.red);
+        jbtnequal.setForeground(Color.white);
         this.pnloperators.add(this.jbtndel = new JButton("<="));
+        jbtndel.setBackground(Color.orange);
         this.pnlmain.add(this.pnldigits, "West");
         this.pnlmain.add(this.pnloperators, "East");
     }
@@ -65,7 +71,7 @@ public class VirtualCalculator implements ActionListener
     String b;
     String op;
     double c;
-    JLabel jscreen;
+    JLabel jscreen, jscreen2;
     JKeyboard jkeyboard;
     
     private VirtualCalculator() {
@@ -76,7 +82,13 @@ public class VirtualCalculator implements ActionListener
         this.c = 0.0;
         final JFrame frCase = new JFrame("Virtual Calculator");
         (this.jscreen = new JLabel("", 4)).setText("Pulse los Botones");
+        (this.jscreen2 = new JLabel("", 4)).setText("");        
         (this.jkeyboard = new JKeyboard()).AddActionListeners((ActionListener)this);
+        jscreen.setOpaque(true);
+        jscreen2.setOpaque(true);
+        jscreen.setBackground(Color.WHITE);
+        jscreen2.setBackground(Color.WHITE);
+        frCase.add(this.jscreen2,"Center");
         frCase.add(this.jscreen, "North");
         frCase.add(this.jkeyboard.pnlmain, "South");
         frCase.setSize(250, 300);
@@ -103,14 +115,21 @@ public class VirtualCalculator implements ActionListener
                     this.a = this.a.substring(0, this.a.length() - 1);
                     break;
                 }
-                break;
             }
             case "+": {
                 this.op = actionCommand;
                 break;
             }
-            case "-": {
-                this.op = actionCommand;
+            case "-": { 
+                if (a.isEmpty())
+                    this.a= actionCommand;
+                else if (op.isEmpty())
+                    this.op = actionCommand;
+                        else
+                    this.b = actionCommand;                
+//else if (b.isEmpty())
+                //    this.b= actionCommand;
+                
                 break;
             }
             case "x": {
@@ -125,6 +144,7 @@ public class VirtualCalculator implements ActionListener
                 this.a = Float.toString((float)this.Cal.Calcular((double)Float.parseFloat(this.a), this.op, (double)Float.parseFloat(this.b)));
                 this.b = "";
                 this.op = "";
+                jscreen2.setText("");
                 break;
             }
             default: {
@@ -136,7 +156,10 @@ public class VirtualCalculator implements ActionListener
                 break;
             }
         }
-        jscreen.setText(a+op+b);
+
+                
+      jscreen.setText(a+op+b);
+     jscreen2.setText(Float.toString((float)this.Cal.Calcular((double)Float.parseFloat(this.a), this.op, (double)Float.parseFloat(this.b))));
     }
     
     public static void main(final String[] args) {

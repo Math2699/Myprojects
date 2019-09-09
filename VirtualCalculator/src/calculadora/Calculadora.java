@@ -13,6 +13,7 @@ public class Calculadora {
 
   double a=0; 
   String op ="";
+  String op1 ="";
   double b=0;
   double c=0;
 	
@@ -20,14 +21,15 @@ public class Calculadora {
 	{
 	  a=0;
 	  op ="";
+          op1 ="";
 	  b=0;
 	  c=0;
 
 	}
-	 public void Calculadora (double pa, String pOp, double pb) 
+	 public void Calculadora (String pOp1,double pa, String pOp, double pb) 
 	{
 	 
-	  this.Calcular( pa, pOp, pb); 
+	  this.Calcular(pa, pOp, pb); 
 	}
     public double Resultado () 
 	{
@@ -40,16 +42,16 @@ public class Calculadora {
 	  b=pb;
 		switch ( op ) {
       		case "+":
-        	   c = a + b;
+                   c = a + b;    
         	   break;
       		case "-":
-        	   c= a - b;
+                   c = a - b;
         	   break;
       		case "x":
-           	   c = a * b;
+                   c = a * b;
            	   break;
       		case "/":
-           	   c = a / b;
+                   c = a / b;
            	   break;
       		case "^":
            	   c = Math.pow(a, b);
