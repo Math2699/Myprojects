@@ -87,10 +87,9 @@ public class VirtualCalculator implements ActionListener
         (this.jkeyboard = new JKeyboard()).AddActionListeners((ActionListener)this);
         jscreen.setOpaque(true);
         jscreen2.setOpaque(true);
-        //jscreen2.setAlignmentY(Component.TOP_ALIGNMENT);
         jscreen.setBackground(Color.WHITE);
         jscreen2.setBackground(Color.WHITE);
-        frCase.add(this.jscreen2,"Center" );
+        frCase.add(this.jscreen2,"Center");
         frCase.add(this.jscreen, "North");
         frCase.add(this.jkeyboard.pnlmain, "South");
         frCase.setSize(250, 300);
@@ -146,6 +145,7 @@ public class VirtualCalculator implements ActionListener
                 this.b = "";
                 this.op = "";
                 op1="";
+                jscreen2.setText("");
                 break;
             }
             default: {
